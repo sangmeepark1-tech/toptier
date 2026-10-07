@@ -1,0 +1,22 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>단어 학습</title><style>:root{--bg:#fff1f5;--card:#ffffff;--button:#fffafe;--text:#59364c;--muted:#856d7b;--accent:#e66d9b;--accentText:#ffffff;--border:#f7c9d9;--imagebg:#fff7f9;--radius:24px;--shadow:0 8px 22px #c8648b20;}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}
+.site{width:min(92%,870px);margin:0 auto;padding:45px 12px 70px;text-align:center}
+h1{font-size:clamp(28px,5vw,40px);margin:8px 0 10px}.subtitle{color:var(--muted);margin:0 0 30px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.word-btn{border:2px solid var(--border);background:var(--button);color:var(--text);border-radius:var(--radius);min-height:100px;padding:19px 12px;font-size:23px;font-weight:750;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s}
+.word-btn:hover{transform:translateY(-3px)}.word-btn:focus-visible,.back:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.card{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:clamp(18px,4vw,32px);box-shadow:var(--shadow)}
+.image-frame{width:100%;aspect-ratio:16/9;background:var(--imagebg);border:1px solid var(--border);border-radius:calc(var(--radius) - 5px);display:flex;align-items:center;justify-content:center;overflow:hidden;margin:20px auto}
+.image-frame img{width:100%;height:100%;object-fit:contain}.empty{color:var(--muted);font-size:16px}
+.description{font-size:18px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}.back{margin-top:22px;background:var(--accent);color:var(--accentText);border:0;border-radius:14px;padding:13px 25px;font-weight:700;font-size:16px;cursor:pointer}
+[hidden]{display:none!important}@media(max-width:580px){.grid{grid-template-columns:1fr}.site{padding-top:26px}.word-btn{min-height:79px}}
+</style></head><body><main class="site"><section id="home"><h1 id="title"></h1><p id="subtitle" class="subtitle"></p><div id="buttons" class="grid"></div></section><section id="detail" hidden><div class="card"><h1 id="wordTitle"></h1><div class="image-frame" id="frame"><img id="picture" alt=""></div><p id="description" class="description"></p><button class="back" id="back">🏠 처음으로</button></div></section></main><script>
+const data={"settings":{"title":"🌱자원과 에너지 핵심 용어🌱","subtitle":"궁금한 단어를 선택하세요.","theme":"pastel"},"words":[{"name":"자원","description":"우리 생활에 이용하는 다양한 원료예요.","image":"images/word1.gif"},{"name":"물 자원","description":"강, 호수, 지하수 등에서 얻을 수 있는 자원이에요.","image":"images/word2.gif"},{"name":"강아지","description":"강아지는 사람과 친하게 지내는 반려동물이에요.","image":"images/word3.gif"},{"name":"꽃","description":"꽃은 다양한 색과 향기를 가지고 있어요.","image":"images/word4.gif"},{"name":"자동차","description":"자동차는 사람을 태우고 이동하는 교통수단이에요.","image":"images/word5.gif"},{"name":"태양","description":"태양은 지구에 빛과 열을 주는 별이에요.","image":"images/word6.gif"}]};
+const byId=id=>document.getElementById(id);
+byId('title').textContent=data.settings.title;
+byId('subtitle').textContent=data.settings.subtitle;
+function home(){byId('detail').hidden=true;byId('home').hidden=false;window.scrollTo(0,0)}
+function show(i){const w=data.words[i];byId('wordTitle').textContent=w.name;byId('description').textContent=w.description;const pic=byId('picture');pic.hidden=!w.image; if(w.image){pic.src=w.image;pic.alt=w.name+' 이미지'}else pic.removeAttribute('src');let old=byId('frame').querySelector('.empty');if(old)old.remove();if(!w.image){const span=document.createElement('span');span.className='empty';span.textContent='등록된 이미지가 없습니다';byId('frame').appendChild(span)}byId('home').hidden=true;byId('detail').hidden=false;window.scrollTo(0,0)}
+data.words.forEach((w,i)=>{let b=document.createElement('button');b.className='word-btn';b.textContent=w.name;b.onclick=()=>show(i);byId('buttons').appendChild(b)});
+byId('back').onclick=home;
+</script></body></html>
